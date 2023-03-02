@@ -121,6 +121,7 @@ main {
     border: solid 1.5px #cd528b;
     box-shadow: -6px -6px 2px black;
     transition: 1s;
+    margin: 3px;
 }
 
 .card:hover {
