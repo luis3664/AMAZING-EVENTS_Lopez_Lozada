@@ -84,7 +84,7 @@ nav > a {
     border-radius: 1rem;
 }
 
-.header > h1 {
+.header > h1, h2 {
     color: #cd1a6e;
     text-shadow: 3px 0 black, -3px 0 black, 0 3px black, 0 -3px black,
     2px 2px black, -2px -2px black, 2px -2px black, -2px 2px black;
@@ -355,7 +355,7 @@ table {
 }
 
 @media (min-width:1440px) {
-    h1 {
+    h1, h2 {
         font-size: 3rem;
     }
 

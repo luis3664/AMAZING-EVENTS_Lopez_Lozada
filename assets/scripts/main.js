@@ -1,5 +1,5 @@
 // Variables
-let cardsElement = document.getElementById("cards");
+let cardsElement = document.getElementById(`cards`);
 let card = {
     name: ``,
     image: ``,
@@ -25,23 +25,76 @@ let card = {
         </article>
     `}
 };
+let checkboxs = document.getElementById(`checkboxs`);
+let searcher = document.forms[0];
 
-bucleOfElementCard(cardsElement, data.events, card);
+bucleOfElement(cardsElement, data.events, card);
+
+checkboxs.addEventListener(`change`, () => {
+    let cardsFilter = filterByForm(data.events);
+
+    bucleOfElement(cardsElement, cardsFilter, card);
+});
+
+searcher.addEventListener(`submit`, (e) => {
+    e.preventDefault();
+    let cardsFilter = filterByForm(data.events);
+
+    bucleOfElement(cardsElement, cardsFilter, card);
+});
+
 
 
 
 // Funtions
 
-function bucleOfElementCard (container, arrayData, element) {
-    let htmlComplete = ``;
-
-    for (const item of arrayData) {
-        element.name = item.name;
-        element.image = item.image;
-        element.description = item.description;
-        element.price = item.price;
-
-        htmlComplete += element.element();
-    };
-    container.innerHTML = htmlComplete;
+function bucleOfElement(container, arrayData, element) {
+    if (arrayData.length > 0) {
+        let htmlComplete = arrayData.reduce( (accumulator, currentElement) => {
+                    element.name = currentElement.name;
+                    element.image = currentElement.image;
+                    element.description = currentElement.description;
+                    element.price = currentElement.price;
+            
+                    return accumulator += element.element();
+        }, ``);
+    
+        container.innerHTML = htmlComplete;
+    } else {
+        container.innerHTML = `<article> <h2 class="text-center">Not Found</h2> </article>`;
+    }
 };
+
+function filterByForm(arrayData) {
+    let arrayNew = arrayData;
+
+    arrayNew = filterByCheckbox(arrayData);
+    arrayNew = filterBySearcher(arrayNew);
+    
+    return arrayNew;
+}
+
+function filterByCheckbox(arrayData) {
+    let arrayNew = arrayData;
+    let checkboxs = Array.from(document.querySelectorAll(`input[type='checkbox']`));
+    let checkboxsChecked = checkboxs.filter(item => item.checked);
+
+    if (checkboxsChecked.length > 0) {
+        arrayNew = checkboxsChecked.reduce((accumulator, currentElement) => {
+            return accumulator.concat(arrayData.filter(item => currentElement.value == item.category))
+        },[]);
+    }
+
+    return arrayNew;
+}
+
+function filterBySearcher(array) {
+    let arrayNew = array;
+    let stringFilter = document.querySelector(`input[type='search']`);
+
+    if (stringFilter != ``) {
+        arrayNew = arrayNew.filter(item => item.name.toLowerCase().includes(stringFilter.value.toLowerCase()));
+    }
+
+    return arrayNew;
+}
