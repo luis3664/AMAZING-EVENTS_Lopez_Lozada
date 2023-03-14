@@ -2,6 +2,7 @@
 let cardsElement = document.getElementById("pastEvent");
 let pastEvent = [];
 let card = {
+    id: null,
     name: ``,
     image: ``,
     description: ``,
@@ -20,7 +21,7 @@ let card = {
         
                 <div class="card-end d-flex align-items-center mt-4 w-100">
                     <span class="col me-4">Price: ${this.price}$</span>
-                    <a href="./details.html" class="col btn text-black p-1">Details</a>
+                    <a href="./details.html?id=${this.id}" class="col btn text-black p-1">Details</a>
                 </div>
             </div>
         </article>
@@ -39,12 +40,13 @@ checkboxs.addEventListener(`change`, () => {
     bucleOfElement(cardsElement, cardsFilter, card);
 });
 
-searcher.addEventListener(`submit`, (e) => {
-    e.preventDefault();
+searcher.addEventListener(`keyup`, () => {
     let cardsFilter = filterByForm(pastEvent);
 
     bucleOfElement(cardsElement, cardsFilter, card);
 });
+
+searcher.addEventListener(`submit`, e => e.preventDefault());
 
 
 
@@ -54,6 +56,7 @@ searcher.addEventListener(`submit`, (e) => {
 function bucleOfElement(container, arrayData, element) {
     if (arrayData.length > 0) {
         let htmlComplete = arrayData.reduce( (accumulator, currentElement) => {
+                    element.id = currentElement[`_id`];
                     element.name = currentElement.name;
                     element.image = currentElement.image;
                     element.description = currentElement.description;
