@@ -28,6 +28,16 @@ let card = {
     `}
 };
 let checkboxs = document.getElementById(`checkboxs`);
+let checkbox = {
+    name: ``,
+    element: function(){
+        return `
+        <label class="d-flex justify-content-evenly align-items-center">
+            <input type="checkbox" name="${this.name}" value="${this.name}">
+            <span>${this.name}</span>
+        </label>
+    `}
+};
 let searcher = document.forms[0];
 
 
@@ -36,6 +46,8 @@ let searcher = document.forms[0];
 upcomingEvent = filterByDate(data.currentDate, data.events, "future");
 
 bucleOfElement(cardsElement, upcomingEvent, card);
+
+printCheckboxs(checkboxs, upcomingEvent, checkbox);
 
 checkboxs.addEventListener(`change`, () => {
     let cardsFilter = filterByForm(upcomingEvent);
@@ -74,6 +86,19 @@ function bucleOfElement(container, arrayData, element) {
     }
 };
 
+function printCheckboxs(container, arrayData, element) {
+    let categorys = new Set(arrayData.map(item => item.category));
+    let htmlComplete = ``;
+
+    categorys.forEach(item => {
+        element.name = item;
+
+        htmlComplete += element.element();
+    })
+
+    container.innerHTML = htmlComplete;
+};
+
 // Estoy indeciso con el parametro time capaz es mejor un booleano pero capaz a futuro aprendo a mejorarlo
 function filterByDate(currentDate, arrayData, time) {
     let newArray = [];
@@ -93,7 +118,7 @@ function filterByDate(currentDate, arrayData, time) {
     }
 
     return newArray;
-}
+};
 
 function filterByForm(arrayData) {
     let arrayNew = arrayData;
@@ -102,7 +127,7 @@ function filterByForm(arrayData) {
     arrayNew = filterBySearcher(arrayNew);
     
     return arrayNew;
-}
+};
 
 function filterByCheckbox(arrayData) {
     let arrayNew = arrayData;
@@ -116,7 +141,7 @@ function filterByCheckbox(arrayData) {
     }
 
     return arrayNew;
-}
+};
 
 function filterBySearcher(array) {
     let arrayNew = array;
@@ -127,4 +152,4 @@ function filterBySearcher(array) {
     }
 
     return arrayNew;
-}
+};

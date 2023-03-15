@@ -27,12 +27,24 @@ let card = {
     `}
 };
 let checkboxs = document.getElementById(`checkboxs`);
+let checkbox = {
+    name: ``,
+    element: function(){
+        return `
+        <label class="d-flex justify-content-evenly align-items-center">
+            <input type="checkbox" name="${this.name}" value="${this.name}">
+            <span>${this.name}</span>
+        </label>
+    `}
+};
 let searcher = document.forms[0];
 
 
 
 // Main
 bucleOfElement(cardsElement, data.events, card);
+
+printCheckboxs(checkboxs, data.events, checkbox);
 
 checkboxs.addEventListener(`change`, () => {
     let cardsFilter = filterByForm(data.events);
@@ -69,6 +81,19 @@ function bucleOfElement(container, arrayData, element) {
     } else {
         container.innerHTML = `<article> <h2 class="text-center">Not Found</h2> </article>`;
     }
+};
+
+function printCheckboxs(container, arrayData, element) {
+    let categorys = new Set(arrayData.map(item => item.category));
+    let htmlComplete = ``;
+
+    categorys.forEach(item => {
+        element.name = item;
+
+        htmlComplete += element.element();
+    })
+
+    container.innerHTML = htmlComplete;
 };
 
 function filterByForm(arrayData) {

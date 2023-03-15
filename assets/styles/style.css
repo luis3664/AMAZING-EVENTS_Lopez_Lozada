@@ -208,6 +208,17 @@ input[type="checkbox"]:checked::after {
     display: flex;
 }
 
+label {
+    cursor: pointer;
+}
+
+label > span {
+    color: #cd1a6e;
+    text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 
+    1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
+    font-size: large;
+}
+
 fieldset {
     width: 100%;
 }
@@ -234,7 +245,7 @@ button[type="submit"],
     border-radius: 1rem;
     background-color: #cd528b;
     border: solid 2px black;
-    box-shadow: -3px -3px 2px black;
+    box-shadow: -2px -3px 2px black;
 }
 
 button[type="submit"]:hover,
