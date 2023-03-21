@@ -1,4 +1,5 @@
 // Variables
+const urlApi = `https://mindhub-xj03.onrender.com/api/amazing`;
 let cardsElement = document.getElementById("upcomingEvent");
 let upcomingEvent = [];
 let card = {
@@ -43,23 +44,7 @@ let searcher = document.forms[0];
 
 
 // Main
-upcomingEvent = filterByDate(data.currentDate, data.events, "future");
-
-bucleOfElement(cardsElement, upcomingEvent, card);
-
-printCheckboxs(checkboxs, upcomingEvent, checkbox);
-
-checkboxs.addEventListener(`change`, () => {
-    let cardsFilter = filterByForm(upcomingEvent);
-
-    bucleOfElement(cardsElement, cardsFilter, card);
-});
-
-searcher.addEventListener(`keyup`, () => {
-    let cardsFilter = filterByForm(upcomingEvent);
-
-    bucleOfElement(cardsElement, cardsFilter, card);
-});
+main(urlApi, cardsElement, card, checkboxs, checkbox, searcher, upcomingEvent);
 
 searcher.addEventListener(`submit`, e => e.preventDefault());
 
@@ -67,6 +52,34 @@ searcher.addEventListener(`submit`, e => e.preventDefault());
 
 
 // Functions
+async function main(url, container, element, checkboxs, checkbox, searcher, arrayFilter) {
+    try {
+        const promise = await fetch(url);
+        let data;
+
+        if (promise.status == 200) {
+            data = await promise.json();
+        } else {
+            const promiseJson = await fetch(`./assets/data/data.json`);
+            data = await promiseJson.json();
+        }
+        
+        arrayFilter = filterByDate(data.currentDate, data.events, "future");
+
+        bucleOfElement(container, arrayFilter, element);
+
+        printCheckboxs(checkboxs, arrayFilter, checkbox);
+
+        searcher.addEventListener(`input`, () => {
+            let cardsFilter = filterByForm(arrayFilter);
+
+            bucleOfElement(container, cardsFilter, element);
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 function bucleOfElement(container, arrayData, element) {
     if (arrayData.length > 0) {
@@ -99,22 +112,13 @@ function printCheckboxs(container, arrayData, element) {
     container.innerHTML = htmlComplete;
 };
 
-// Estoy indeciso con el parametro time capaz es mejor un booleano pero capaz a futuro aprendo a mejorarlo
 function filterByDate(currentDate, arrayData, time) {
     let newArray = [];
 
     if (time == "past") {
-        for (const data of arrayData) {
-            if (data.date < currentDate) {
-                newArray.push(data);
-            };
-        };
+        newArray = arrayData.filter(item => item.date < currentDate);
     } else {
-        for (const data of arrayData) {
-            if (data.date > currentDate) {
-                newArray.push(data);
-            };
-        };
+        newArray = arrayData.filter(item => item.date > currentDate);
     }
 
     return newArray;

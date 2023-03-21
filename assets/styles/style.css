@@ -11,6 +11,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
+    background-attachment: fixed;
 }
 
 nav {
@@ -337,6 +338,10 @@ table {
     margin-bottom: 0 !important;
 }
 
+.layout {
+    table-layout: fixed;
+}
+
 .border-end {
     border-radius: 0 0 1rem 1rem !important;
 
@@ -386,5 +391,15 @@ table {
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
         padding: 1.05em;
+    }
 }
+
+@media (max-width:374px) {
+    td, th {
+        font-size: small;
+    }
+
+    caption > h3 {
+        font-size: large;
+    }
 }
