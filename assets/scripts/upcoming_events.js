@@ -66,6 +66,16 @@ async function main(url, container, element, checkboxs, checkbox, searcher, arra
         
         arrayFilter = filterByDate(data.currentDate, data.events, "future");
 
+        arrayFilter = (arrayFilter).sort((a, b) => {
+            if (a.date < b.date) {
+                return -1;
+            }
+            if (a.date > b.date) {
+                return 1;
+            }
+            return 0;
+        });
+
         bucleOfElement(container, arrayFilter, element);
 
         printCheckboxs(checkboxs, arrayFilter, checkbox);

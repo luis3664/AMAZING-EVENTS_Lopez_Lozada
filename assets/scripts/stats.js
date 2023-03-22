@@ -42,17 +42,9 @@ function filterByDate(currentDate, arrayData, time) {
     let newArray = [];
 
     if (time == "past") {
-        for (const data of arrayData) {
-            if (data.date < currentDate) {
-                newArray.push(data);
-            };
-        };
+        newArray = arrayData.filter(item => item.date < currentDate);
     } else {
-        for (const data of arrayData) {
-            if (data.date > currentDate) {
-                newArray.push(data);
-            };
-        };
+        newArray = arrayData.filter(item => item.date > currentDate);
     }
 
     return newArray;

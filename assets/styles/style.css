@@ -271,6 +271,18 @@ button[type="submit"]:active,
     box-shadow: -5px -5px 2px black;
 }
 
+#topButton {
+    max-height: 13vh;
+    position: fixed;
+    left: 89vw;
+    top: 84vh;
+}
+
+#topButton > span {
+    transform: rotateZ(270deg);
+    box-shadow: 3px -3px 2px black;
+}
+
 /* Details */
 
 #header-details {
@@ -355,6 +367,10 @@ table {
     #detailsText {
         min-height: 300px;
     }
+
+    #topButton {
+        left: 91vw;
+    }
 }
 
 @media (min-width:1024px) {
@@ -365,6 +381,10 @@ table {
     #detailsText {
         width: 380px;
         height: 300px;
+    }
+
+    #topButton {
+        left: 92.8vw;
     }
 }
 
@@ -380,6 +400,10 @@ table {
     #detailsText {
         width: 500px;
         height: 400px;
+    }
+
+    #topButton {
+        left: 91vw;
     }
 }
 
@@ -401,5 +425,9 @@ table {
 
     caption > h3 {
         font-size: large;
+    }
+
+    #topButton {
+        left: 90vw;
     }
 }

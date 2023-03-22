@@ -62,12 +62,22 @@ async function main(url, container, element, checkboxs, checkbox, searcher) {
             data = await promiseJson.json();
         }
 
-        bucleOfElement(container, data.events, element);
+        let events = (data.events).sort((a, b) => {
+            if (a.date > b.date) {
+                return -1;
+            }
+            if (a.date < b.date) {
+                return 1;
+            }
+            return 0;
+        });
 
-        printCheckboxs(checkboxs, data.events, checkbox);
+        bucleOfElement(container, events, element);
+
+        printCheckboxs(checkboxs, events, checkbox);
 
         searcher.addEventListener(`input`, () => {
-            let cardsFilter = filterByForm(data.events);
+            let cardsFilter = filterByForm(events);
 
             bucleOfElement(container, cardsFilter, element);
         });
