@@ -1,19 +1,41 @@
 const params = new URLSearchParams(document.location.search);
 const eventId = params.get(`id`);
-const eventCard = data.events.find(item => item[`_id`] == eventId);
+const urlApi = `https://mindhub-xj03.onrender.com/api/amazing`;
 const title = document.querySelector(`title`);
 let containerElement = document.getElementById(`main-details`);
-let time = eventCard.date > data.currentDate;
 
-printDetails(containerElement, eventCard, time);
 
+
+// Main
+main(urlApi, eventId, containerElement, title);
 
 
 // Functions
+async function main(url, id, container, titleNav) {
+    try {
+        const promise = await fetch(url);
+        let data;
 
-function printDetails(container, card, time) {
+        if (promise.status == 200) {
+            data = await promise.json();
+        } else {
+            const promiseJson = await fetch(`./assets/data/data.json`);
+            data = await promiseJson.json();
+        }
+
+        const eventCard = data.events.find(item => item[`_id`] == id);
+        let time = eventCard.date > data.currentDate;
+
+        printDetails(container, eventCard, time, titleNav);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function printDetails(container, card, time, titleNav) {
     if (card != undefined) {
-        title.textContent = card.name;
+        titleNav.textContent = card.name;
     
         if (time) {
             container.innerHTML = `

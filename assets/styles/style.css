@@ -11,6 +11,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
+    background-attachment: fixed;
 }
 
 nav {
@@ -270,6 +271,18 @@ button[type="submit"]:active,
     box-shadow: -5px -5px 2px black;
 }
 
+#topButton {
+    max-height: 13vh;
+    position: fixed;
+    left: 89vw;
+    top: 84vh;
+}
+
+#topButton > span {
+    transform: rotateZ(270deg);
+    box-shadow: 3px -3px 2px black;
+}
+
 /* Details */
 
 #header-details {
@@ -337,6 +350,10 @@ table {
     margin-bottom: 0 !important;
 }
 
+.layout {
+    table-layout: fixed;
+}
+
 .border-end {
     border-radius: 0 0 1rem 1rem !important;
 
@@ -350,6 +367,10 @@ table {
     #detailsText {
         min-height: 300px;
     }
+
+    #topButton {
+        left: 91vw;
+    }
 }
 
 @media (min-width:1024px) {
@@ -360,6 +381,10 @@ table {
     #detailsText {
         width: 380px;
         height: 300px;
+    }
+
+    #topButton {
+        left: 92.8vw;
     }
 }
 
@@ -376,6 +401,10 @@ table {
         width: 500px;
         height: 400px;
     }
+
+    #topButton {
+        left: 91vw;
+    }
 }
 
 @media (max-width:424px) {
@@ -386,5 +415,19 @@ table {
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
         padding: 1.05em;
+    }
 }
+
+@media (max-width:374px) {
+    td, th {
+        font-size: small;
+    }
+
+    caption > h3 {
+        font-size: large;
+    }
+
+    #topButton {
+        left: 90vw;
+    }
 }

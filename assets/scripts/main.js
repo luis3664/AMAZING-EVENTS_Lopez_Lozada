@@ -1,4 +1,5 @@
 // Variables
+const urlApi = `https://mindhub-xj03.onrender.com/api/amazing`;
 let cardsElement = document.getElementById(`cards`);
 let card = {
     id: null,
@@ -42,28 +43,49 @@ let searcher = document.forms[0];
 
 
 // Main
-bucleOfElement(cardsElement, data.events, card);
-
-printCheckboxs(checkboxs, data.events, checkbox);
-
-checkboxs.addEventListener(`change`, () => {
-    let cardsFilter = filterByForm(data.events);
-
-    bucleOfElement(cardsElement, cardsFilter, card);
-});
-
-searcher.addEventListener(`keyup`, () => {
-    let cardsFilter = filterByForm(data.events);
-
-    bucleOfElement(cardsElement, cardsFilter, card);
-});
+main(urlApi, cardsElement, card, checkboxs, checkbox, searcher);
 
 searcher.addEventListener(`submit`, e => e.preventDefault());
 
 
 
-
 // Funtions
+async function main(url, container, element, checkboxs, checkbox, searcher) {
+    try {
+        const promise = await fetch(url);
+        let data;
+
+        if (promise.status == 200) {
+            data = await promise.json();
+        } else {
+            const promiseJson = await fetch(`./assets/data/data.json`);
+            data = await promiseJson.json();
+        }
+
+        let events = (data.events).sort((a, b) => {
+            if (a.date > b.date) {
+                return -1;
+            }
+            if (a.date < b.date) {
+                return 1;
+            }
+            return 0;
+        });
+
+        bucleOfElement(container, events, element);
+
+        printCheckboxs(checkboxs, events, checkbox);
+
+        searcher.addEventListener(`input`, () => {
+            let cardsFilter = filterByForm(events);
+
+            bucleOfElement(container, cardsFilter, element);
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 function bucleOfElement(container, arrayData, element) {
     if (arrayData.length > 0) {
