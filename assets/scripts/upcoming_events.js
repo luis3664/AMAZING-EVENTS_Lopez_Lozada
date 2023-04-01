@@ -14,13 +14,13 @@ let card = {
             <figure>                    
                 <img src="${this.image}" class="card-img-top mt-2 img-fluid" alt="${this.name}">
             </figure>
-            <div class="card-body pt-1 d-flex justify-content-center align-items-center flex-column">
+            <div class="card-body pt-1 d-flex justify-content-between align-items-center flex-column">
                 <div class="row align-items-center">
                     <h5 class="text-center card-title">${this.name}</h5>
                     <p class="card-text">${this.description}</p>
                 </div>
         
-                <div class="card-end d-flex align-items-center mt-4 w-100">
+                <div class="card-end d-flex align-items-center w-100">
                     <span class="col me-4">Price: ${this.price}$</span>
                     <a href="./details.html?id=${this.id}" class="col btn text-black p-1">Details</a>
                 </div>
